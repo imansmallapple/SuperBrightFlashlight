@@ -1,4 +1,5 @@
-import { Size } from '@ohos/hypium'
+// import { Size } from '@ohos/hypium'
+
 
 @Entry
 @Component
@@ -13,8 +14,28 @@ struct SecondPage {
   @State vInSetValueTwo: number = 0
   @State isOn: boolean = false
 
-  build() {
+  @Builder
+  DividerComponent() {
     Column() {
+      Divider()
+        .dividerStyle('30%')
+      Divider()
+        .dividerStyle('11%')
+      Divider()
+        .dividerStyle('10%')
+      Divider()
+        .dividerStyle('11%')
+      Divider()
+        .dividerStyle('10.5%')
+    }
+    .alignItems(HorizontalAlign.End)
+    .width('100%')
+    .height('100%')
+    .zIndex(0)
+  }
+
+  build() {
+    Stack() {
       Slider({
         value: this.vInSetValueTwo,
         step: 20,
@@ -22,7 +43,7 @@ struct SecondPage {
         direction: Axis.Vertical,
         reverse: true,
       })
-        .showSteps(true)
+        .showSteps(false)
         .onChange((value: number, mode: SliderChangeMode) => {
           this.vInSetValueTwo = value
           if (value == 0) {
@@ -39,28 +60,30 @@ struct SecondPage {
           y: '10%'
         })
         .stepSize(20)
-        .stepColor('#bc646363')
+        // .stepColor('#bc646363')
         .trackThickness(50)
         .trackBorderRadius(10)
-        .trackColor('#2d436475')
+        .trackColor('#2d20a4e7')
         .selectedColor('#ffffffff')
-        .blockColor('#ff981e1e')
-        .blockStyle({
-          type: SliderBlockType.SHAPE,
-          shape: new Rect({
-            width: 50,
-            height: 50,
-          })
-        })
+        .blockColor('#79e7dede')
+        .showTips(true)
+        // .blockStyle({
+        //   type: SliderBlockType.SHAPE,
+        //   shape: new Rect({
+        //     width: 50,
+        //     height: 50,
+        //   })
+        // })
+        .zIndex(1)
+      this.DividerComponent()
     }
-    .alignItems(HorizontalAlign.End)
+    //.alignItems(HorizontalAlign.End)
     .height('100%')
-    .backgroundColor(this.isOn ? Color.Orange : Color.Gray)
+    .backgroundColor(this.isOn ? '#d2ddcccc' : '#97050505')
     .width('100%')
     .backgroundImage(this.isOn == false ? $r('app.media.light_off') : $r('app.media.light_on'))
     .backgroundImageSize(ImageSize.Contain)
     .backgroundImagePosition(Alignment.Center)
-
     // Row() {
     //   Toggle({
     //     type: ToggleType.Switch,
@@ -97,5 +120,16 @@ function tabTitleStyle(color: ResourceColor) {
 @Extend(Button)
 function myButtonStyle(color: ResourceColor) {
   .backgroundColor(color)
+}
 
+@Extend(Divider)
+function dividerStyle(length?: Length) {
+  .strokeWidth(2)
+  .margin({
+    bottom: '20%',
+    right:'6%',
+    top: length,
+  })
+  .color('#6b6b6b')
+  .width('14%')
 }
